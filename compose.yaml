@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: laptech
+      POSTGRES_USER: laptech
+      POSTGRES_PASSWORD: laptech
+    ports:
+      - "5432:5432"
+    volumes:
+      - laptech_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U laptech -d laptech"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  laptech_pg_data:

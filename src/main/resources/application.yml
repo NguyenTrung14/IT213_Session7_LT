@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: laptech-rag-chatbot
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/laptech}
+    username: ${DATABASE_USERNAME:laptech}
+    password: ${DATABASE_PASSWORD:laptech}
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+      chat:
+        options:
+          model: ${OPENAI_CHAT_MODEL:gpt-4.1-mini}
+          temperature: 0.1
+      embedding:
+        options:
+          model: ${OPENAI_EMBEDDING_MODEL:text-embedding-3-small}
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        dimensions: ${EMBEDDING_DIMENSIONS:1536}
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        max-document-batch-size: 100
+
+app:
+  rag:
+    document-location: classpath:/docs/LapTech_Store_Info.pdf
+    chunk-size: 350
+    chunk-overlap: 60
+    top-k: 5
+    similarity-threshold: 0.65
+    max-memory-messages: 20
+
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
