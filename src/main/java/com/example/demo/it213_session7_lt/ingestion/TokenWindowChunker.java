@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.ai.document.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,6 +21,7 @@ public class TokenWindowChunker {
     private final int overlap;
     private final Encoding encoding;
 
+    @Autowired
     public TokenWindowChunker(RagProperties properties) {
         this(properties.chunkSize(), properties.chunkOverlap());
     }

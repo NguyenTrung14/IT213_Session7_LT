@@ -43,6 +43,8 @@ Mỗi chunk có tối đa **350 token**. Kích thước này đủ chứa trọn
 
 2. Mở `.env`, thay `OPENAI_API_KEY` bằng key thật. Không commit tệp này; `.gitignore` đã loại trừ `.env`.
 
+   Tài khoản API phải có credits/quota khả dụng. Gói ChatGPT và hạn mức API được quản lý riêng; nếu OpenAI trả HTTP `429`, hãy kiểm tra Billing trên OpenAI API Platform.
+
 3. Khởi động PostgreSQL/pgvector:
 
    ```powershell

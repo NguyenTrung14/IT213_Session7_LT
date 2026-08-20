@@ -1,5 +1,6 @@
 package com.example.demo.it213_session7_lt.web;
 
+import com.openai.errors.RateLimitException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.LinkedHashMap;
@@ -30,6 +31,16 @@ public class GlobalExceptionHandler {
     ResponseEntity<ApiError> handleBadRequest(IllegalArgumentException exception,
                                               HttpServletRequest request) {
         return response(HttpStatus.BAD_REQUEST, exception.getMessage(), request, Map.of());
+    }
+
+    @ExceptionHandler(RateLimitException.class)
+    ResponseEntity<ApiError> handleOpenAiQuota(RateLimitException exception,
+                                               HttpServletRequest request) {
+        log.warn("OpenAI request rejected because the account has no available quota");
+        return response(HttpStatus.TOO_MANY_REQUESTS,
+                "OpenAI API quota is unavailable. Check API billing and credits.",
+                request,
+                Map.of());
     }
 
     @ExceptionHandler(Exception.class)
